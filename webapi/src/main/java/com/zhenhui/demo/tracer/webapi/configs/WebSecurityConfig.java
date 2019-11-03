@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.webapi.config;
+package com.zhenhui.demo.tracer.webapi.configs;
 
 import com.zhenhui.demo.tracer.webapi.restful.errors.AccessDeniedHandlerImpl;
 import com.zhenhui.demo.tracer.webapi.security.AuthorizationTokenFilter;

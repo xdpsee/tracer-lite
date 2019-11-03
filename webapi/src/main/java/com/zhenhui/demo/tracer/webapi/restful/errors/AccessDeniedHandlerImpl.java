@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.webapi.restful.errors;
 
 import com.zhenhui.demo.tracer.domain.utils.JsonUtils;
-import com.zhenhui.demo.tracer.webapi.restful.common.Result;
+import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

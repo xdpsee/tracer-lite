@@ -48,11 +48,11 @@ public abstract class AbstractConnector implements ServerConnector {
                 configs.putAll(JsonUtils.toMap(content));
                 return configs;
             } finally {
-                logger.info("loading config file: " + path + "\r\n" + content);
+                logger.info("loading configs file: " + path + "\r\n" + content);
             }
 
         } catch (Throwable e) {
-            throw new IllegalStateException("Load config file: " + configFilePath() + " failed!", e);
+            throw new IllegalStateException("Load configs file: " + configFilePath() + " failed!", e);
         } finally {
             if (inputStream != null) {
                 try {

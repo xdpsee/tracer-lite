@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.webapi.config;
+package com.zhenhui.demo.tracer.webapi.configs;
 
 import org.springframework.context.annotation.Configuration;
 

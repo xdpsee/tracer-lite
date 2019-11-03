@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.webapi.restful.errors;
 
-import com.zhenhui.demo.tracer.webapi.restful.common.Result;
+import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.restful.exception.ServiceException;
 import com.zhenhui.demo.tracer.webapi.restful.exception.TokenException;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;

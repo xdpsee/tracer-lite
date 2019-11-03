@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.webapi.restful.common;
+package com.zhenhui.demo.tracer.webapi.common;
 
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import lombok.Builder;

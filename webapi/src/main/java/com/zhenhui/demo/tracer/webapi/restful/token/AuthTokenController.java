@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.webapi.restful.token;
 
-import com.zhenhui.demo.tracer.webapi.restful.common.Result;
+import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.security.UserPrincipal;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import com.zhenhui.demo.tracer.webapi.utils.TokenUtils;
