@@ -19,8 +19,8 @@ import java.util.UUID;
 public class RestfulController {
 
     @SuppressWarnings("unused")
-    @Reference(version = "1.0.0")
-    private ControlService controlService;
+    //@Reference(version = "1.0.0")
+    //private ControlService controlService;
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/test")
@@ -39,7 +39,7 @@ public class RestfulController {
         command.setUuid(UUID.randomUUID().toString());
 
         try {
-            controlService.executeCommand(command, 3000);
+            //controlService.executeCommand(command, 3000);
         } catch (Exception e) {
             return e.getClass().getSimpleName();
         }

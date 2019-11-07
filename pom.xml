@@ -33,6 +33,7 @@
         <module>tracer-webapi</module>
         <module>tracer-storage</module>
         <module>server-protocols/mobile-protocol</module>
+        <module>tracer-webapp</module>
     </modules>
 
     <repositories>

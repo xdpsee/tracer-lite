@@ -1,27 +1,24 @@
-package com.zhenhui.demo.tracer.webapi.utils;
+package com.zhenhui.demo.tracer.webapp.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.zhenhui.demo.tracer.domain.utils.JsonUtils;
-import com.zhenhui.demo.tracer.webapi.restful.exception.TokenException;
-import com.zhenhui.demo.tracer.webapi.security.UserPrincipal;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 
-@Component
 public class TokenUtils {
 
     private static final String KEY_CLAIM_PRINCIPAL = "principal";
 
     private static Algorithm algorithm = Algorithm.HMAC512("8znpkQ7lYrrR37iigfiTyzX");
 
-    public String generate(UserPrincipal user) {
+    public static String generate(UserPrincipal user) {
 
         final String principal = JsonUtils.toJsonString(user);
         return JWT.create()
@@ -34,7 +31,7 @@ public class TokenUtils {
                 .sign(algorithm);
     }
 
-    public UserPrincipal parse(String token) throws TokenException {
+    public static UserPrincipal parse(String token) throws TokenException {
 
         try {
             final Claim principal = JWT.decode(token).getClaim(KEY_CLAIM_PRINCIPAL);
@@ -49,14 +46,20 @@ public class TokenUtils {
         }
     }
 
-    public String extractToken(HttpServletRequest request) {
+    public static String extractToken(HttpServletRequest request) throws UnsupportedEncodingException {
 
-        String header = request.getHeader("Authorization");
-        if (StringUtils.isEmpty(header) || !header.startsWith("Bearer ")) {
+        final String header = request.getHeader("Authorization");
+        if (null == header) {
             return null;
         }
 
-        String[] components = header.split("\\s+");
+        String v = URLDecoder.decode(header, "UTF-8");
+
+        if (StringUtils.isEmpty(v) || !v.startsWith("Bearer ")) {
+            return null;
+        }
+
+        String[] components = v.split("\\s+");
         if (components.length != 2) {
             return null;
         }
