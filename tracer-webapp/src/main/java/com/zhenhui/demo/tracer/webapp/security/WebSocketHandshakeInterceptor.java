@@ -6,13 +6,11 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
 
-@Component
 public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
@@ -20,7 +18,7 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return true;
+            return false;
         }
 
         return authentication instanceof UsernamePasswordAuthenticationToken;

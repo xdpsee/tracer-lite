@@ -2,7 +2,6 @@ package com.zhenhui.demo.tracer.webapp.config;
 
 import com.zhenhui.demo.tracer.webapp.security.WebSocketChannelInterceptor;
 import com.zhenhui.demo.tracer.webapp.security.WebSocketHandshakeInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -15,22 +14,16 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Autowired
-    private WebSocketHandshakeInterceptor handshakeInterceptor;
-
-    @Autowired
-    private WebSocketChannelInterceptor channelInterceptor;
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .withSockJS()
-                .setInterceptors(handshakeInterceptor);
+                .setInterceptors(new WebSocketHandshakeInterceptor());
     }
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(channelInterceptor);
+        registration.interceptors(new WebSocketChannelInterceptor());
     }
 
     @Override
