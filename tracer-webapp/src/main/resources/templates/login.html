@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css">
@@ -12,10 +13,27 @@
     <script src="/webjars/bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
-<form action="/auth/login" method="post">
-    <input type="text" name="username" size="20"><br/>
-    <input type="password" name="password" size="20">
-    <input type="submit" value="---">
-</form>
+<div class="login-form">
+    <form action="/auth/login" method="post">
+        <div class="avatar">
+            <img src="/images/avatar.png" alt="Avatar">
+        </div>
+        <h2 class="text-center">Member Login</h2>
+        <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+        </div>
+        <div class="clearfix">
+            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+            <a href="#" class="pull-right">Forgot Password?</a>
+        </div>
+    </form>
+    <p class="text-center small">Don't have an account? <a href="#">Sign up here!</a></p>
+</div>
 </body>
 </html>
