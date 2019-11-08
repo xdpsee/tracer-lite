@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.TimerTask;
-
 @Controller
 public class GreetingController implements InitializingBean {
+
+    @Autowired
+    private SimpUserRegistry userRegistry;
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
@@ -30,12 +33,16 @@ public class GreetingController implements InitializingBean {
 
             while (true) {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     // ignore
                 }
 
-                //messagingTemplate.convertAndSendToUser("test", "/topic/greetings", new Greeting(String.valueOf(System.currentTimeMillis())));
+                for (SimpUser user : userRegistry.getUsers()) {
+                    System.out.println(user.getName());
+                }
+
+                messagingTemplate.convertAndSendToUser("test", "/events", new Greeting(String.valueOf(System.currentTimeMillis())));
             }
 
         }).start();

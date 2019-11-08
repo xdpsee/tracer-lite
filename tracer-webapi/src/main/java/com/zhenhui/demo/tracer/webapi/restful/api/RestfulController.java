@@ -1,11 +1,9 @@
 package com.zhenhui.demo.tracer.webapi.restful.api;
 
-import com.zhenhui.demo.tracer.control.ControlService;
 import com.zhenhui.demo.tracer.domain.Command;
 import com.zhenhui.demo.tracer.domain.enums.CommandType;
 import com.zhenhui.demo.tracer.webapi.restful.exception.ErrorCodes;
 import com.zhenhui.demo.tracer.webapi.restful.exception.ServiceException;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

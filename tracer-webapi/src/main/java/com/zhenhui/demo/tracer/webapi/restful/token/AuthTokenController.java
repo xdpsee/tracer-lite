@@ -1,9 +1,7 @@
 package com.zhenhui.demo.tracer.webapi.restful.token;
 
 import com.zhenhui.demo.tracer.webapi.common.Result;
-import com.zhenhui.demo.tracer.webapi.security.UserPrincipal;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
-import com.zhenhui.demo.tracer.webapi.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

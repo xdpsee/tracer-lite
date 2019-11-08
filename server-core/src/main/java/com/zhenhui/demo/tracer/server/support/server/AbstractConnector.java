@@ -1,9 +1,9 @@
 package com.zhenhui.demo.tracer.server.support.server;
 
 
+import com.zhenhui.demo.tracer.common.utils.JsonUtils;
 import com.zhenhui.demo.tracer.domain.server.Configs;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
-import com.zhenhui.demo.tracer.domain.utils.JsonUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

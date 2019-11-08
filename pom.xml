@@ -26,14 +26,18 @@
     </properties>
 
     <modules>
-        <module>control-api</module>
+        <module>apis/control-api</module>
+        <module>apis/storage-api</module>
         <module>server-domain</module>
         <module>server-core</module>
         <module>server-starter</module>
         <module>tracer-webapi</module>
-        <module>tracer-storage</module>
+        <module>storage-service</module>
         <module>server-protocols/mobile-protocol</module>
         <module>tracer-webapp</module>
+        <module>common-utils</module>
+        <module>tracer-security</module>
+        <module>tracer-uic</module>
     </modules>
 
     <repositories>

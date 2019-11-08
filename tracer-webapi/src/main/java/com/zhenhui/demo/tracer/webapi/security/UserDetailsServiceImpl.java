@@ -1,6 +1,7 @@
 package com.zhenhui.demo.tracer.webapi.security;
 
-import com.google.common.collect.Sets;
+import com.zhenhui.demo.tracer.security.Authority;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +19,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (username.equals("zhcen")) {
             user.setId(1L);
-            user.setAuthorities(Sets.newHashSet(UserAuthority.NORMAL));
+            user.getAuthorities().add(Authority.NORMAL);
         } else if (username.equals("admin")) {
             user.setId(2L);
-            user.setAuthorities(Sets.newHashSet(UserAuthority.ADMIN));
+            user.getAuthorities().add(Authority.SUPER);
         } else {
             throw new UsernameNotFoundException(username);
         }

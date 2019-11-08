@@ -1,9 +1,10 @@
 package com.zhenhui.demo.tracer.webapi.security;
 
-import com.zhenhui.demo.tracer.domain.utils.JsonUtils;
+import com.zhenhui.demo.tracer.common.utils.JsonUtils;
+import com.zhenhui.demo.tracer.security.TokenUtils;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
 import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
-import com.zhenhui.demo.tracer.webapi.utils.TokenUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,22 +20,19 @@ import java.io.IOException;
 
 public class AuthorizationTokenFilter extends OncePerRequestFilter {
 
-    private final TokenUtils tokenUtils;
-
     private final AntPathRequestMatcher requestMatcher;
 
-    public AuthorizationTokenFilter(String requestUrlPattern, TokenUtils tokenUtils) {
+    public AuthorizationTokenFilter(String requestUrlPattern) {
         this.requestMatcher = new AntPathRequestMatcher(requestUrlPattern);
-        this.tokenUtils = tokenUtils;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final String token = tokenUtils.extractToken(request);
+        final String token = TokenUtils.extractToken(request);
         if (requestMatcher.matches(request)) {
             try {
-                UserPrincipal user = tokenUtils.parse(token);
+                UserPrincipal user = TokenUtils.parse(token);
                 SecurityContextHolder.getContext()
                         .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities()));
             } catch (Exception e) {

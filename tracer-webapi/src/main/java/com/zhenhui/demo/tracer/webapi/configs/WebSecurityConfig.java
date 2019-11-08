@@ -3,7 +3,6 @@ package com.zhenhui.demo.tracer.webapi.configs;
 import com.zhenhui.demo.tracer.webapi.restful.errors.AccessDeniedHandlerImpl;
 import com.zhenhui.demo.tracer.webapi.security.AuthorizationTokenFilter;
 import com.zhenhui.demo.tracer.webapi.security.UserDetailsServiceImpl;
-import com.zhenhui.demo.tracer.webapi.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +27,6 @@ import java.util.Collections;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private TokenUtils tokenUtils;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -77,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated();
 
-        http.addFilterBefore(new AuthorizationTokenFilter("/api/**", tokenUtils), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationTokenFilter("/api/**"), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().cacheControl();
     }

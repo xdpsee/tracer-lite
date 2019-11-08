@@ -2,9 +2,10 @@ package com.zhenhui.demo.tracer.server.support.server;
 
 
 import com.zhenhui.demo.tracer.domain.server.ConnectionManager;
-import com.zhenhui.demo.tracer.storage.service.api.DeviceService;
-import com.zhenhui.demo.tracer.storage.service.api.EventService;
-import com.zhenhui.demo.tracer.storage.service.api.LocationService;
+import com.zhenhui.demo.tracer.storage.api.service.DeviceService;
+import com.zhenhui.demo.tracer.storage.api.service.EventService;
+import com.zhenhui.demo.tracer.storage.api.service.LocationService;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -16,6 +17,15 @@ public final class ServerContext implements ApplicationContextAware {
     private static volatile ApplicationContext context = null;
 
     private static volatile boolean initialized = false;
+
+    @Reference(version = "1.0.0")
+    private DeviceService deviceService;
+
+    @Reference(version = "1.0.0")
+    private LocationService locationService;
+
+    @Reference(version = "1.0.0")
+    private EventService eventService;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

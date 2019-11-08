@@ -1,5 +1,7 @@
 package com.zhenhui.demo.tracer.webapp.security;
 
+import com.zhenhui.demo.tracer.security.Authority;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
