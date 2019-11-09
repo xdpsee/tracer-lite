@@ -7,6 +7,7 @@ import com.zhenhui.demo.tracer.uic.service.dal.repository.UserRepository;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Autowired
     private UserRepository userRepository;
 
+    @Cacheable(cacheNames = "user", key = "#username", unless = "#result == null")
     @Override
     public User queryByName(String username) {
 
@@ -29,6 +31,7 @@ public class UserQueryServiceImpl implements UserQueryService {
         return null;
     }
 
+    @Cacheable(cacheNames = "user", key = "#userId", unless = "#result == null")
     @Override
     public User queryById(Long userId) {
         Optional<UserDO> user = userRepository.findById(userId);

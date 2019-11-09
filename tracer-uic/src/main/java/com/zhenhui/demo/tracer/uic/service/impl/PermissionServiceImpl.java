@@ -11,6 +11,8 @@ import com.zhenhui.demo.tracer.uic.service.dal.repository.AuthorityRepository;
 import com.zhenhui.demo.tracer.uic.service.dal.repository.RoleRepository;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.transaction.Transactional;
@@ -29,6 +31,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PermissionServiceImpl self;
 
+    @CacheEvict(cacheNames = {"user-roles", "user-roles-and-authorities"}, key = "#userId")
     @Override
     public void addUserRole(Long userId, Set<Role> roles) {
 
@@ -41,6 +44,7 @@ public class PermissionServiceImpl implements PermissionService {
         roleRepository.saveAll(urs);
     }
 
+    @CacheEvict(cacheNames = {"user-roles", "user-roles-and-authorities"}, key = "#userId")
     @Override
     public void removeUserRoles(Long userId, Set<Role> roles) {
         List<UserRoleDO> urs = roles.stream().map(r -> {
@@ -52,6 +56,7 @@ public class PermissionServiceImpl implements PermissionService {
         roleRepository.deleteAll(urs);
     }
 
+    @CacheEvict(cacheNames = "role-authorities", key = "#role")
     @Transactional(rollbackOn = Exception.class)
     @Override
     public void addRoleAuthority(Role role, Set<Authority> authorities) {
@@ -66,6 +71,7 @@ public class PermissionServiceImpl implements PermissionService {
         authorityRepository.saveAll(ras);
     }
 
+    @CacheEvict(cacheNames = "role-authorities", key = "#role")
     @Transactional(rollbackOn = Exception.class)
     @Override
     public void removeRoleAuthority(Role role, Set<Authority> authorities) {
@@ -79,6 +85,7 @@ public class PermissionServiceImpl implements PermissionService {
         authorityRepository.deleteAll(ras);
     }
 
+    @Cacheable(cacheNames = "user-roles", key = "#userId")
     @Override
     public Set<Role> queryUserRoles(Long userId) {
 
@@ -88,6 +95,7 @@ public class PermissionServiceImpl implements PermissionService {
                 .collect(Collectors.toSet());
     }
 
+    @Cacheable(cacheNames = "role-authorities", key = "#role")
     @Override
     public Set<Authority> queryRoleAuthorities(Role role) {
 
@@ -98,6 +106,7 @@ public class PermissionServiceImpl implements PermissionService {
                 .collect(Collectors.toSet());
     }
 
+    @Cacheable(cacheNames = "user-roles-and-authorities", key = "#userId")
     @Override
     public Set<? extends GrantedAuthority> queryUserAuthorities(Long userId) {
 
