@@ -1,5 +1,7 @@
 package com.zhenhui.demo.tracer.webapi.restful.token;
 
+import com.zhenhui.demo.tracer.security.TokenUtils;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
 import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping(path = "/auth/token")
@@ -21,9 +24,6 @@ public class AuthTokenController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenUtils tokenUtils;
 
     @PostMapping(path = "/claim")
     public Result claim(@RequestBody TokenClaimParam param) {
@@ -35,16 +35,16 @@ public class AuthTokenController {
 
         return Result.builder()
                 .status(HttpStatus.OK.value())
-                .data(tokenUtils.generate(user))
+                .data(TokenUtils.generate(user))
                 .message("OK")
                 .timestamp(Timestamp.now())
                 .build();
     }
 
     @PostMapping(path = "/refresh")
-    public Result refresh(HttpServletRequest request) {
+    public Result refresh(HttpServletRequest request) throws UnsupportedEncodingException {
 
-        final String token = tokenUtils.extractToken(request);
+        final String token = TokenUtils.extractToken(request);
         if (StringUtils.isEmpty(token)) {
             return Result.builder()
                     .status(HttpStatus.UNAUTHORIZED.value())
@@ -53,20 +53,20 @@ public class AuthTokenController {
                     .build();
         }
 
-        UserPrincipal user = tokenUtils.parse(token);
+        UserPrincipal user = TokenUtils.parse(token);
 
         return Result.builder()
                 .status(HttpStatus.OK.value())
                 .message("OK")
                 .timestamp(Timestamp.now())
-                .data(tokenUtils.generate(user))
+                .data(TokenUtils.generate(user))
                 .build();
     }
 
     @PostMapping(path = "/invalid")
-    public Result invalid(HttpServletRequest request) {
+    public Result invalid(HttpServletRequest request) throws UnsupportedEncodingException {
 
-        final String token = tokenUtils.extractToken(request);
+        final String token = TokenUtils.extractToken(request);
         if (StringUtils.isEmpty(token)) {
             return Result.builder()
                     .status(HttpStatus.UNAUTHORIZED.value())

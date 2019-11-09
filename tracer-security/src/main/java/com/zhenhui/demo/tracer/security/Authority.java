@@ -1,16 +1,20 @@
 package com.zhenhui.demo.tracer.security;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Authority implements GrantedAuthority {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Authority implements GrantedAuthority {
 
-    NORMAL,
-    SUPER,
-    ;
+    private String name;
 
     @Override
     public String getAuthority() {
-        return name();
+        return name;
     }
 }
 

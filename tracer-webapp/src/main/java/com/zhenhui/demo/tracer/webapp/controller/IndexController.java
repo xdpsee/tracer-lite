@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
-    @PreAuthorize("hasAnyAuthority('NORMAL')")
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/")
     public String index(HttpServletRequest request, HttpServletResponse response) {
         return "index";
