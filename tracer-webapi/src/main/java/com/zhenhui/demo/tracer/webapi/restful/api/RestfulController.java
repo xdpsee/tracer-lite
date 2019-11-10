@@ -20,7 +20,7 @@ public class RestfulController {
     //@Reference(version = "1.0.0")
     //private ControlService controlService;
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
     public String test() {
 

@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthorizationTokenFilter extends OncePerRequestFilter {
+public class AuthorizationTokenFilter2 extends OncePerRequestFilter {
 
     private final AntPathRequestMatcher requestMatcher;
 
-    public AuthorizationTokenFilter(String requestUrlPattern) {
+    public AuthorizationTokenFilter2(String requestUrlPattern) {
         this.requestMatcher = new AntPathRequestMatcher(requestUrlPattern);
     }
 
@@ -36,6 +36,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext()
                         .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities()));
             } catch (Exception e) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 //noinspection deprecation
                 response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
                 response.getWriter().write(JsonUtils.toJsonString(Result.builder()

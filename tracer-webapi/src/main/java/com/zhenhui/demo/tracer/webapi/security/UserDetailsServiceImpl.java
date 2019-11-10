@@ -1,23 +1,28 @@
 package com.zhenhui.demo.tracer.webapi.security;
 
-import com.zhenhui.demo.tracer.security.UserPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.zhenhui.demo.tracer.security.UserDetailsServiceSupport;
+import com.zhenhui.demo.tracer.uic.api.service.PermissionService;
+import com.zhenhui.demo.tracer.uic.api.service.UserQueryService;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl extends UserDetailsServiceSupport {
+
+    @Reference(version = "1.0.0")
+    private UserQueryService userQueryService;
+
+    @Reference(version = "1.0.0")
+    private PermissionService permissionService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    protected UserQueryService userQueryService() {
+        return this.userQueryService;
+    }
 
-        UserPrincipal user = new UserPrincipal();
-        user.setUsername(username);
-        user.setPassword("123456");
-
-
-        return user;
+    @Override
+    protected PermissionService permissionService() {
+        return this.permissionService;
     }
 }
 

@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.webapi.configs;
 
 import com.zhenhui.demo.tracer.webapi.restful.errors.AccessDeniedHandlerImpl;
-import com.zhenhui.demo.tracer.webapi.security.AuthorizationTokenFilter;
+import com.zhenhui.demo.tracer.webapi.security.AuthorizationTokenFilter2;
 import com.zhenhui.demo.tracer.webapi.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest().authenticated();
 
-        http.addFilterBefore(new AuthorizationTokenFilter("/api/**"), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationTokenFilter2("/api/**"), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().cacheControl();
     }
