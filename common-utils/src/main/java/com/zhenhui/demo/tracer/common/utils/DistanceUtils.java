@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.server.support.utils;
+package com.zhenhui.demo.tracer.common.utils;
 
 public final class DistanceUtils {
 

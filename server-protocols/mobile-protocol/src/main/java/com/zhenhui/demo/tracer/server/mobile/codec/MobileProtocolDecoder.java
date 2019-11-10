@@ -12,7 +12,10 @@ import org.springframework.util.StringUtils;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Message> {
@@ -58,23 +61,23 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Messa
      */
     private Location decodeLocation(String message) throws MessageException.DecodeFailure {
 
-        Location position = new Location();
+        Location location = new Location();
 
         String[] components = message.split("[#,]");
         if (components.length != 11 && components.length != 12) {
             throw new MessageException.DecodeFailure("invalid message: " + message);
         }
 
-        position.setDeviceId(new DeviceID(DeviceID.Type.IMEI, components[3]));
-        position.setLocated(true);
-        position.setLatitude(Double.parseDouble(components[4]));
-        position.setLongitude(Double.parseDouble(components[5]));
-        position.setAltitude(Double.parseDouble(components[6]));
-        position.setCourse(Double.parseDouble(components[7]));
-        position.setSpeed(Double.parseDouble(components[8]));
-        position.setTimestamp(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(components[9])),
+        location.setDeviceId(new DeviceID(DeviceID.Type.IMEI, components[3]));
+        location.setLocated(true);
+        location.setLatitude(Double.parseDouble(components[4]));
+        location.setLongitude(Double.parseDouble(components[5]));
+        location.setAltitude(Double.parseDouble(components[6]));
+        location.setCourse(Double.parseDouble(components[7]));
+        location.setSpeed(Double.parseDouble(components[8]));
+        location.setTimestamp(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(components[9])),
                 ZoneId.systemDefault()));
-        position.getAttributes().put(Location.Attributes.KEY_BOOL_OUTDATED, "1".equals(components[10]));
+        location.getAttributes().put(Location.Attributes.KEY_BOOL_OUTDATED, "1".equals(components[10]));
 
         if (components.length == 12) {
             final String alarms = components[11];
@@ -90,12 +93,12 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Messa
                 });
 
                 if (!alerts.isEmpty()) {
-                    position.getAttributes().put(Location.Attributes.KEY_ALARM, String.join(",", alerts));
+                    location.getAttributes().put(Location.Attributes.KEY_ALARM, String.join(",", alerts));
                 }
             }
         }
 
-        return position;
+        return location;
     }
 }
 

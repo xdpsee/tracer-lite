@@ -26,19 +26,19 @@
     </properties>
 
     <modules>
-        <module>apis/uic-api</module>
-        <module>apis/control-api</module>
-        <module>apis/storage-api</module>
+        <module>common-utils</module>
+        <module>libraries/uic-api</module>
+        <module>libraries/control-api</module>
+        <module>libraries/storage-api</module>
         <module>server-domain</module>
         <module>server-core</module>
         <module>server-starter</module>
-        <module>tracer-webapi</module>
-        <module>storage-service</module>
+        <module>server-storage</module>
         <module>server-protocols/mobile-protocol</module>
-        <module>tracer-webapp</module>
-        <module>common-utils</module>
-        <module>tracer-security</module>
         <module>tracer-uic</module>
+        <module>tracer-security</module>
+        <module>tracer-webapi</module>
+        <module>tracer-webapp</module>
     </modules>
 
     <repositories>
