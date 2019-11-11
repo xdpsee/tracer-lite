@@ -1,11 +1,12 @@
 package com.zhenhui.demo.tracer.webapp.configs;
 
 import com.zhenhui.demo.tracer.security.AuthorizationTokenFilter;
+import com.zhenhui.demo.tracer.security.UserDetailsServiceSupport;
 import com.zhenhui.demo.tracer.webapp.security.AuthenticationLoginFilter;
-import com.zhenhui.demo.tracer.webapp.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -47,9 +49,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(@Autowired UserDetailsServiceImpl userDetailsService) {
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceSupport() {
+        };
+    }
+
+    @DependsOn("userDetailsService")
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userDetailsService());
         provider.setHideUserNotFoundExceptions(false);
         provider.setPasswordEncoder(passwordEncoder());
 
@@ -87,7 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ;
 
         http.addFilterBefore(new AuthenticationLoginFilter("/auth/login", authenticationManager), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(new AuthorizationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationTokenFilter(null), UsernamePasswordAuthenticationFilter.class);
         http.headers().cacheControl();
     }
 }

@@ -1,8 +1,8 @@
-package com.zhenhui.demo.tracer.webapi.restful.errors;
+package com.zhenhui.demo.tracer.webapi.security;
 
+import com.zhenhui.demo.tracer.security.TokenException;
 import com.zhenhui.demo.tracer.webapi.common.Result;
 import com.zhenhui.demo.tracer.webapi.restful.exception.ServiceException;
-import com.zhenhui.demo.tracer.webapi.restful.exception.TokenException;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ExceptionsHandler {
+public class ControllerExceptionAdvice {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

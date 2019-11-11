@@ -1,8 +1,9 @@
 package com.zhenhui.demo.tracer.webapi.configs;
 
-import com.zhenhui.demo.tracer.webapi.restful.errors.AccessDeniedHandlerImpl;
-import com.zhenhui.demo.tracer.webapi.security.AuthorizationTokenFilter2;
-import com.zhenhui.demo.tracer.webapi.security.UserDetailsServiceImpl;
+import com.zhenhui.demo.tracer.security.AuthorizationTokenFilter;
+import com.zhenhui.demo.tracer.security.UserDetailsServiceSupport;
+import com.zhenhui.demo.tracer.webapi.security.AccessDeniedHandlerImpl;
+import com.zhenhui.demo.tracer.webapi.security.ExceptionHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -27,6 +30,9 @@ import java.util.Collections;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,9 +48,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(@Autowired UserDetailsServiceImpl userDetailsService) {
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceSupport();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userDetailsService());
         provider.setHideUserNotFoundExceptions(false);
         provider.setPasswordEncoder(passwordEncoder());
 
@@ -71,9 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         , "/auth/token/refresh"
                         , "/auth/token/invalid")
                 .permitAll()
-                .anyRequest().authenticated();
+                .anyRequest()
+                .authenticated();
 
-        http.addFilterBefore(new AuthorizationTokenFilter2("/api/**"), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AuthorizationTokenFilter(new AntPathRequestMatcher("/api/**")), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(exceptionHandlerFilter, AuthorizationTokenFilter.class);
 
         http.headers().cacheControl();
     }

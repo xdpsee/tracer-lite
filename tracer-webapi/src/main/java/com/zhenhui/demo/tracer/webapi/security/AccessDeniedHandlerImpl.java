@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.webapi.restful.errors;
+package com.zhenhui.demo.tracer.webapi.security;
 
 import com.zhenhui.demo.tracer.common.utils.JsonUtils;
 import com.zhenhui.demo.tracer.webapi.common.Result;

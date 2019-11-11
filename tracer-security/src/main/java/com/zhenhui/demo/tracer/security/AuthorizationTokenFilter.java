@@ -2,6 +2,7 @@ package com.zhenhui.demo.tracer.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,8 +17,19 @@ import java.net.URLDecoder;
 
 public class AuthorizationTokenFilter extends OncePerRequestFilter {
 
+    private final RequestMatcher requestMatcher;
+
+    public AuthorizationTokenFilter(RequestMatcher requestMatcher) {
+        this.requestMatcher = requestMatcher;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+
+        if (requestMatcher != null && !requestMatcher.matches(request)) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String token = getTokenFromCookies(request);
         if (StringUtils.isEmpty(token)) {
