@@ -39,6 +39,7 @@
         <module>tracer-security</module>
         <module>tracer-webapi</module>
         <module>tracer-webapp</module>
+        <module>libraries/udm-api</module>
     </modules>
 
     <repositories>
