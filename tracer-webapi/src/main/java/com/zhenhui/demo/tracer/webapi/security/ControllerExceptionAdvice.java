@@ -2,7 +2,7 @@ package com.zhenhui.demo.tracer.webapi.security;
 
 import com.zhenhui.demo.tracer.security.TokenException;
 import com.zhenhui.demo.tracer.webapi.common.Result;
-import com.zhenhui.demo.tracer.webapi.restful.exception.ServiceException;
+import com.zhenhui.demo.tracer.webapi.exception.ServiceException;
 import com.zhenhui.demo.tracer.webapi.utils.Timestamp;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

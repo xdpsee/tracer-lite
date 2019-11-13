@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.webapi.restful.exception;
+package com.zhenhui.demo.tracer.webapi.exception;
 
 public enum ErrorCodes {
     SUCCESS(200, "OK"),

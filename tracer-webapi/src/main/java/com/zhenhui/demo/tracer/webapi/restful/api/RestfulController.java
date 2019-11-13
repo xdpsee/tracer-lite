@@ -2,10 +2,11 @@ package com.zhenhui.demo.tracer.webapi.restful.api;
 
 import com.zhenhui.demo.tracer.domain.Command;
 import com.zhenhui.demo.tracer.domain.enums.CommandType;
-import com.zhenhui.demo.tracer.webapi.restful.exception.ErrorCodes;
-import com.zhenhui.demo.tracer.webapi.restful.exception.ServiceException;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
+import com.zhenhui.demo.tracer.webapi.common.Result;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +23,9 @@ public class RestfulController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
-    public String test() {
+    public Result test(@AuthenticationPrincipal UserPrincipal user) {
 
-        throw new ServiceException(ErrorCodes.DEVICE_NOT_FOUND);
+        return Result.builder().status(200).message("OK").data(user).build();
 
     }
 
