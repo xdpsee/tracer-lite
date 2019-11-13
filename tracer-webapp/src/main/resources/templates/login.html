@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +15,9 @@
 </head>
 <body>
 <div class="login-form">
-    <form action="/auth/login" method="post">
+    <form th:action="@{/login}" method="post">
         <div class="avatar">
-            <img src="/images/avatar.png" alt="Avatar">
+            <img th:src="@{/images/avatar.png}" alt="Avatar">
         </div>
         <h2 class="text-center">Member Login</h2>
         <div class="form-group">

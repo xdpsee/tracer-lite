@@ -1,8 +1,8 @@
 package com.zhenhui.demo.tracer.webapp.configs;
 
 import com.zhenhui.demo.tracer.security.AuthorizationTokenFilter;
+import com.zhenhui.demo.tracer.security.TokenUtils;
 import com.zhenhui.demo.tracer.security.UserDetailsServiceSupport;
-import com.zhenhui.demo.tracer.webapp.security.AuthenticationLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,24 +16,27 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,6 +54,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceSupport() {
+        };
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+
+        return new SavedRequestAwareAuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+
+                TokenUtils.persistTokenCookie(response, authentication);
+
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+        };
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new SimpleUrlAuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                setDefaultFailureUrl("/login?error=true");
+                super.onAuthenticationFailure(request, response, exception);
+            }
         };
     }
 
@@ -79,23 +107,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
-                .loginProcessingUrl("/auth/login")
-                .failureUrl("/login?error").permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .successHandler(authenticationSuccessHandler())
+                .failureHandler(authenticationFailureHandler())
+                .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout=true")
                 .clearAuthentication(true)
                 .deleteCookies("Authorization")
                 .invalidateHttpSession(true)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/ws/**", "/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .antMatchers("/login**", "/ws/**", "/webjars/**", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
                 ;
 
-        http.addFilterBefore(new AuthenticationLoginFilter("/auth/login", authenticationManager), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new AuthorizationTokenFilter(null), UsernamePasswordAuthenticationFilter.class);
         http.headers().cacheControl();
     }

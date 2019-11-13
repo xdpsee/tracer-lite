@@ -1,21 +1,17 @@
 package com.zhenhui.demo.tracer.webapp.controller;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.zhenhui.demo.tracer.security.UserPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
 
     @GetMapping("/login")
-    public String login(HttpServletResponse response) {
+    public String login(@AuthenticationPrincipal final UserPrincipal user) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+        if (user != null) {
             return "redirect:/";
         }
 
@@ -23,3 +19,4 @@ public class LoginController {
     }
 
 }
+

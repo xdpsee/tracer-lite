@@ -6,11 +6,16 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zhenhui.demo.tracer.common.utils.JsonUtils;
+import org.apache.catalina.util.URLEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Date;
 
 public class TokenUtils {
@@ -66,6 +71,22 @@ public class TokenUtils {
         }
 
         return components[1];
+    }
+
+    public static void persistTokenCookie(HttpServletResponse response, Authentication authentication) {
+
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+
+        String token = TokenUtils.generate(principal);
+
+        String value = URLEncoder.DEFAULT.encode("Bearer " + token, Charset.forName("UTF-8"));
+
+        Cookie cookie = new Cookie("Authorization", value);
+        cookie.setPath("/");
+        cookie.setMaxAge(15 * 24 * 3600);
+        cookie.setVersion(1);
+
+        response.addCookie(cookie);
     }
 }
 

@@ -40,7 +40,7 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
             UserPrincipal principal = TokenUtils.parse(token);
 
             if (principal != null) {
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(principal.getUsername(), null, principal.getAuthorities()));
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities()));
             }
         }
 
