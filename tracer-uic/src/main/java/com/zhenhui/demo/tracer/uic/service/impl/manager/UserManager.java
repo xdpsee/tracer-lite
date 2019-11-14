@@ -13,12 +13,15 @@ import com.zhenhui.demo.tracer.uic.service.dal.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class UserManager {
@@ -54,13 +57,15 @@ public class UserManager {
     }
 
     public List<User> getDirectSubUsers(Long userId) {
-        return null;
+
+        List<RelationDO> relations = relationRepository.findByAncestorIdAndDepthOrderByDepthAsc(userId, 1);
+        return getSubUsersFromRelations(relations);
     }
 
     public List<User> getAllSubUsers(Long userId) {
-        return null;
+        List<RelationDO> relations = relationRepository.findByAncestorIdOrderByDepthAsc(userId);
+        return getSubUsersFromRelations(relations);
     }
-
 
     @Transactional(rollbackOn = Exception.class)
     public Long createUser(User user, Set<Role> roles) {
@@ -96,11 +101,22 @@ public class UserManager {
 
     @Transactional(rollbackOn = Exception.class)
     public void removeSubUser(Long userId, Long subUserId) throws UserException {
-        if (!userRepository.existsById(userId)) {
-            throw new UserException(String.format("user %d not found!", userId));
+        if (!userRepository.existsById(subUserId)) {
+            throw new UserException(String.format("user %d not found!", subUserId));
         }
 
+        Optional<RelationDO> relation = relationRepository.findByAncestorIdAndDescendantId(userId, subUserId);
+        if (!relation.isPresent()) {
+            throw new UserException(String.format("users %d, %d have no relation!", userId, subUserId));
+        }
 
+        List<RelationDO> all = relationRepository.findByAncestorId(subUserId);
+        relationRepository.deleteInBatch(all);
+
+        List<Long> allSubUserIds = all.stream().map(RelationDO::getDescendantId).distinct().collect(toList());
+        List<UserDO> allSubUsers = userRepository.findAllById(allSubUserIds);
+        allSubUsers.forEach(u -> u.setDeleted(true));
+        userRepository.saveAll(allSubUsers);
     }
 
     private UserDO saveUser(User user, Set<Role> roles) {
@@ -114,7 +130,7 @@ public class UserManager {
             ur.setUserId(result.getId());
             ur.setRole(RoleDO.valueOf(role.name()));
             return ur;
-        }).collect(Collectors.toList()));
+        }).collect(toList()));
 
         return result;
     }
@@ -141,4 +157,19 @@ public class UserManager {
         }
     }
 
+    private List<User> getSubUsersFromRelations(List<RelationDO> relations) {
+
+        List<Long> userIds = relations.stream().map(RelationDO::getDescendantId).distinct().collect(toList());
+        if (!CollectionUtils.isEmpty(userIds)) {
+            List<UserDO> userDOs = userRepository.findAllById(userIds);
+            return userDOs.stream().map(u -> {
+                User user = new User();
+                BeanUtils.copyProperties(u, user);
+                return user;
+            }).collect(toList());
+        }
+
+        return new ArrayList<>();
+
+    }
 }

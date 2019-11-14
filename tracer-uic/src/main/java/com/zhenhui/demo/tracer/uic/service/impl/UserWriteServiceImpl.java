@@ -8,6 +8,7 @@ import com.zhenhui.demo.tracer.uic.service.impl.manager.UserManager;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 
 import java.util.Set;
 
@@ -22,13 +23,19 @@ public class UserWriteServiceImpl implements UserWriteService {
         return userManager.createUser(user, roles);
     }
 
-    @CacheEvict(cacheNames = "direct-sub-users", key = "#userId")
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "direct-sub-users", key = "#userId"),
+            @CacheEvict(cacheNames = "all-sub-users", key = "#userId")
+    })
     @Override
     public Long createSubUser(Long userId, User subUser, Set<Role> roles) throws UserException {
         return userManager.createSubUser(userId, subUser, roles);
     }
 
-    @CacheEvict(cacheNames = "all-sub-users", key = "#userId")
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "direct-sub-users", key = "#userId"),
+            @CacheEvict(cacheNames = "all-sub-users", key = "#userId")
+    })
     @Override
     public void removeSubUser(Long userId, Long subUserId) throws UserException {
         userManager.removeSubUser(userId, subUserId);
