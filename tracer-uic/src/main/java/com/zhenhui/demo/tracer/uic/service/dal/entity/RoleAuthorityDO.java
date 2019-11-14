@@ -2,6 +2,8 @@ package com.zhenhui.demo.tracer.uic.service.dal.entity;
 
 import com.zhenhui.demo.tracer.uic.service.dal.conv.AuthorityDOAttrConverter;
 import com.zhenhui.demo.tracer.uic.service.dal.conv.RoleDOAttrConverter;
+import com.zhenhui.demo.tracer.uic.service.dal.enums.AuthorityDO;
+import com.zhenhui.demo.tracer.uic.service.dal.enums.RoleDO;
 import lombok.Data;
 
 import javax.persistence.*;

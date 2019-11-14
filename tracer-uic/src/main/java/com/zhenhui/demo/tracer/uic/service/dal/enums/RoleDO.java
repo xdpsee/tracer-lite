@@ -1,4 +1,4 @@
-package com.zhenhui.demo.tracer.uic.service.dal.entity;
+package com.zhenhui.demo.tracer.uic.service.dal.enums;
 
 import lombok.Getter;
 

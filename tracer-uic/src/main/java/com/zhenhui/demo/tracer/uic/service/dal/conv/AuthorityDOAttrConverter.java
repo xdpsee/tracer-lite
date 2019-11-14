@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.uic.service.dal.conv;
 
-import com.zhenhui.demo.tracer.uic.service.dal.entity.AuthorityDO;
+import com.zhenhui.demo.tracer.uic.service.dal.enums.AuthorityDO;
 
 import javax.persistence.AttributeConverter;
 

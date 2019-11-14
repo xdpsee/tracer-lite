@@ -27,4 +27,8 @@ public class UserDO implements Serializable {
 
     @Column(nullable = false, columnDefinition = "bool")
     private Boolean locked = false;
+
+    @Column(nullable = false, columnDefinition = "bool")
+    private Boolean deleted;
 }
+
