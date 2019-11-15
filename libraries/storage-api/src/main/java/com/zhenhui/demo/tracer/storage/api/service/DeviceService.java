@@ -7,4 +7,7 @@ public interface DeviceService {
 
     Device queryDevice(DeviceID deviceId);
 
+    Device queryDevice(Long deviceId);
+
+    boolean existsDevice(Long deviceId);
 }

@@ -32,5 +32,24 @@ public class DeviceServiceImpl implements DeviceService {
         return null;
     }
 
+    @Override
+    public Device queryDevice(Long deviceId) {
+        Optional<DeviceDO> deviceDO = deviceRepository.findById(deviceId);
 
+        if (deviceDO.isPresent()) {
+            Device device = new Device();
+            device.setDeviceId(deviceDO.get().getDeviceId());
+            device.setCaption(deviceDO.get().getCaption());
+            device.setAttributes(deviceDO.get().getAttributes());
+
+            return device;
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean existsDevice(Long deviceId) {
+        return deviceRepository.existsById(deviceId);
+    }
 }
