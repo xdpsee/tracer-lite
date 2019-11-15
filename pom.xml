@@ -26,20 +26,21 @@
     </properties>
 
     <modules>
-        <module>common-utils</module>
+        <module>libraries/common-utils</module>
         <module>libraries/uic-api</module>
         <module>libraries/control-api</module>
         <module>libraries/storage-api</module>
-        <module>server-domain</module>
-        <module>server-core</module>
+        <module>libraries/server-domain</module>
+        <module>libraries/server-support</module>
+        <module>libraries/tracer-security</module>
+        <module>protocols/mobile-protocol</module>
         <module>server-starter</module>
-        <module>server-storage</module>
-        <module>server-protocols/mobile-protocol</module>
-        <module>tracer-uic</module>
-        <module>tracer-security</module>
+        <module>storage-service</module>
+        <module>uic-service</module>
         <module>tracer-webapi</module>
         <module>tracer-webapp</module>
         <module>libraries/udm-api</module>
+        <module>udm-service</module>
     </modules>
 
     <repositories>

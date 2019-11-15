@@ -1,10 +1,11 @@
 package com.zhenhui.demo.tracer.udm.api.service;
 
-import com.zhenhui.demo.tracer.udm.api.domain.BindingResult;
+import com.zhenhui.demo.tracer.udm.api.exception.BindingException;
 
 public interface DeviceBindService {
 
-    BindingResult bindDevice(long userId, long deviceId);
+    boolean bindDevice(long userId, long deviceId) throws BindingException;
 
-    BindingResult unbindDevice(long userId, long deviceId);
+    boolean unbindDevice(long userId, long deviceId) throws BindingException;
 }
+
