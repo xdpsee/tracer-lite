@@ -1,8 +1,9 @@
 package com.zhenhui.demo.tracer.domain;
 
 
+import com.zhenhui.demo.tracer.common.DeviceID;
+import com.zhenhui.demo.tracer.common.utils.AttributesOp;
 import com.zhenhui.demo.tracer.domain.enums.CommandType;
-import com.zhenhui.demo.tracer.domain.utils.AttributesOp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

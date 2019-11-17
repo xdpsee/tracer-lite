@@ -1,11 +1,11 @@
 package com.zhenhui.demo.tracer.udm.service;
 
-import com.zhenhui.demo.tracer.domain.Device;
+import com.zhenhui.demo.tracer.common.Device;
 import com.zhenhui.demo.tracer.storage.api.service.DeviceService;
 import com.zhenhui.demo.tracer.udm.api.service.BindingQueryService;
 import com.zhenhui.demo.tracer.udm.service.manager.BindingManager;
-import com.zhenhui.demo.tracer.uic.api.domain.User;
-import com.zhenhui.demo.tracer.uic.api.service.UserQueryService;
+import com.zhenhui.demo.tracer.uicc.api.domain.User;
+import com.zhenhui.demo.tracer.uicc.api.service.UserQueryService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;

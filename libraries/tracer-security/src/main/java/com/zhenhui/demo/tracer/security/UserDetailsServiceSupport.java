@@ -1,9 +1,9 @@
 package com.zhenhui.demo.tracer.security;
 
-import com.zhenhui.demo.tracer.uic.api.domain.Role;
-import com.zhenhui.demo.tracer.uic.api.domain.User;
-import com.zhenhui.demo.tracer.uic.api.service.PermissionService;
-import com.zhenhui.demo.tracer.uic.api.service.UserQueryService;
+import com.zhenhui.demo.tracer.uicc.api.domain.Role;
+import com.zhenhui.demo.tracer.uicc.api.domain.User;
+import com.zhenhui.demo.tracer.uicc.api.service.PermissionService;
+import com.zhenhui.demo.tracer.uicc.api.service.UserQueryService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;

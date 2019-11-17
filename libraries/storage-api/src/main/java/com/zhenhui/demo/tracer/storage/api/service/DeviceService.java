@@ -1,7 +1,8 @@
 package com.zhenhui.demo.tracer.storage.api.service;
 
-import com.zhenhui.demo.tracer.domain.Device;
-import com.zhenhui.demo.tracer.domain.DeviceID;
+
+import com.zhenhui.demo.tracer.common.Device;
+import com.zhenhui.demo.tracer.common.DeviceID;
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
 package com.zhenhui.demo.tracer.server.support.handler;
 
-import com.zhenhui.demo.tracer.domain.Device;
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.server.Configs;
 import com.zhenhui.demo.tracer.domain.server.Connection;
-import com.zhenhui.demo.tracer.domain.server.Message;
+import com.zhenhui.demo.tracer.domain.Message;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.exception.DeviceException;
 import com.zhenhui.demo.tracer.server.support.exception.MessageException;
@@ -12,6 +11,7 @@ import com.zhenhui.demo.tracer.server.support.server.ConnectionImpl;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
 import com.zhenhui.demo.tracer.server.support.utils.ChannelAttributes;
 import com.zhenhui.demo.tracer.server.support.utils.DeviceUtils;
+import com.zhenhui.demo.tracer.common.Device;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

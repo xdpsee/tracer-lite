@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.udm.api.service;
 
-import com.zhenhui.demo.tracer.domain.Device;
-import com.zhenhui.demo.tracer.uic.api.domain.User;
+import com.zhenhui.demo.tracer.common.Device;
+import com.zhenhui.demo.tracer.uicc.api.domain.User;
 
 import java.util.List;
 

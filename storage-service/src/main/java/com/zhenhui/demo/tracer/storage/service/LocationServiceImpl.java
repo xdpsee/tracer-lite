@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.storage.service;
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.storage.api.service.LocationService;
 import com.zhenhui.demo.tracer.storage.service.conv.LocationConverter;

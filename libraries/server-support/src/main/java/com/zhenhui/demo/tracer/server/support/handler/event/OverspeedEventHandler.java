@@ -16,8 +16,7 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.domain.Device;
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.Event;
 import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.domain.enums.EventType;
@@ -26,6 +25,7 @@ import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.handler.AbstractEventHandler;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
 import com.zhenhui.demo.tracer.server.support.utils.DeviceUtils;
+import com.zhenhui.demo.tracer.common.Device;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.server.support.server;
 
 import com.google.common.collect.MapMaker;
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.server.Connection;
 import com.zhenhui.demo.tracer.domain.server.ConnectionManager;
 import org.slf4j.Logger;

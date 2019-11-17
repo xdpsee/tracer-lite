@@ -1,5 +1,6 @@
 package com.zhenhui.demo.tracer.domain.server;
 
+import com.zhenhui.demo.tracer.domain.Message;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;

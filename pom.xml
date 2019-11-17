@@ -26,8 +26,8 @@
     </properties>
 
     <modules>
-        <module>libraries/common-utils</module>
-        <module>libraries/uic-api</module>
+        <module>libraries/common</module>
+        <module>libraries/uicc-api</module>
         <module>libraries/control-api</module>
         <module>libraries/storage-api</module>
         <module>libraries/server-domain</module>
@@ -36,7 +36,7 @@
         <module>protocols/mobile-protocol</module>
         <module>server-starter</module>
         <module>storage-service</module>
-        <module>uic-service</module>
+        <module>uicc-service</module>
         <module>tracer-webapi</module>
         <module>tracer-webapp</module>
         <module>libraries/udm-api</module>

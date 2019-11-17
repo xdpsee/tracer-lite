@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.storage.service.dal.repository;
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.storage.service.dal.entity.DeviceDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 

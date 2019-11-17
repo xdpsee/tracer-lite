@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.storage.service.dal.entity.convertor;
 
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 
 import javax.persistence.AttributeConverter;
 

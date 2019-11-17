@@ -1,8 +1,8 @@
 package com.zhenhui.demo.tracer.server.mobile.codec;
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.Location;
-import com.zhenhui.demo.tracer.domain.server.Message;
+import com.zhenhui.demo.tracer.domain.Message;
 import com.zhenhui.demo.tracer.server.mobile.message.RegistryMessage;
 import com.zhenhui.demo.tracer.server.support.codec.AbstractProtocolDecoder;
 import com.zhenhui.demo.tracer.server.support.exception.MessageException;

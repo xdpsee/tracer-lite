@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.storage.service.dal.entity;
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.Event;
 import com.zhenhui.demo.tracer.domain.enums.EventType;
 import com.zhenhui.demo.tracer.storage.service.dal.entity.convertor.DeviceIDConverter;

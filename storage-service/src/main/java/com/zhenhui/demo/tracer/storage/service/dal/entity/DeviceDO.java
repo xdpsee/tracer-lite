@@ -1,9 +1,9 @@
 package com.zhenhui.demo.tracer.storage.service.dal.entity;
 
-import com.zhenhui.demo.tracer.domain.Device;
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.storage.service.dal.entity.convertor.DeviceAttrsConverter;
 import com.zhenhui.demo.tracer.storage.service.dal.entity.convertor.DeviceIDConverter;
+import com.zhenhui.demo.tracer.common.Device;
 import lombok.Data;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 

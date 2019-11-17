@@ -1,6 +1,7 @@
 package com.zhenhui.demo.tracer.domain.server;
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+
+import com.zhenhui.demo.tracer.common.DeviceID;
 
 public interface ConnectionManager {
 

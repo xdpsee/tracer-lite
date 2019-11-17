@@ -2,7 +2,7 @@ package com.zhenhui.demo.tracer.storage.service.dal.entity.convertor;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.zhenhui.demo.tracer.common.utils.JsonUtils;
-import com.zhenhui.demo.tracer.domain.Device;
+import com.zhenhui.demo.tracer.common.Device;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.AttributeConverter;

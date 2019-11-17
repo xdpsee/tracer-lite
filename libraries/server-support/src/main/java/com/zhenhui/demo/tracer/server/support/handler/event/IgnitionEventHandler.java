@@ -17,7 +17,7 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.domain.DeviceID;
+import com.zhenhui.demo.tracer.common.DeviceID;
 import com.zhenhui.demo.tracer.domain.Event;
 import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.domain.enums.EventType;
