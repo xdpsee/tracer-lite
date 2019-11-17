@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BindingManager {
@@ -26,6 +28,7 @@ public class BindingManager {
             bindingDO.setBoundAt(LocalDateTime.now());
             repository.save(bindingDO);
         } catch (Exception e) {
+            logger.error(String.format("BindingManager.bind userId=%d, deviceId=%d exception", userId, deviceId), e);
             return false;
         }
 
@@ -37,9 +40,29 @@ public class BindingManager {
         try {
             repository.deleteByUserIdAndDeviceId(userId, deviceId);
         } catch (Exception e) {
+            logger.error(String.format("BindingManager.unbind userId=%d, deviceId=%d exception", userId, deviceId), e);
             return false;
         }
 
         return true;
     }
+
+    public boolean isBound(long userId, long deviceId) {
+        return repository.existsByUserIdAndDeviceId(userId, deviceId);
+    }
+
+    public List<Long> getUserDeviceIds(long userId) {
+        List<DeviceBindingDO> bindings = repository.findByUserId(userId);
+        return bindings.stream()
+                .map(DeviceBindingDO::getDeviceId)
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> getDeviceUsers(long deviceId) {
+        List<DeviceBindingDO> bindings = repository.findByDeviceId(deviceId);
+        return bindings.stream()
+                .map(DeviceBindingDO::getDeviceId)
+                .collect(Collectors.toList());
+    }
 }
+

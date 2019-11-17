@@ -8,7 +8,9 @@ import com.zhenhui.demo.tracer.storage.service.dal.repository.DeviceRepository;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service(version = "1.0.0")
 public class DeviceServiceImpl implements DeviceService {
@@ -46,6 +48,20 @@ public class DeviceServiceImpl implements DeviceService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<Device> queryDevices(List<Long> deviceIds) {
+
+        List<DeviceDO> devices = deviceRepository.findAllById(deviceIds);
+
+        return devices.stream().map(d -> {
+            Device device = new Device();
+            device.setDeviceId(d.getDeviceId());
+            device.setCaption(d.getCaption());
+            device.setAttributes(d.getAttributes());
+            return device;
+        }).collect(Collectors.toList());
     }
 
     @Override

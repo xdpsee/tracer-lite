@@ -56,6 +56,17 @@ public class UserManager {
         return null;
     }
 
+    public List<User> getByIds(List<Long> userIds) {
+        List<UserDO> users = userRepository.findAllById(userIds);
+
+        return users.stream().map(u -> {
+            User result = new User();
+            BeanUtils.copyProperties(u, result);
+            return result;
+        }).collect(toList());
+
+    }
+
     public List<User> getDirectSubUsers(Long userId) {
 
         List<RelationDO> relations = relationRepository.findByAncestorIdAndDepthOrderByDepthAsc(userId, 1);

@@ -3,7 +3,7 @@ package com.zhenhui.demo.tracer.security;
 import com.zhenhui.demo.tracer.uic.api.domain.Role;
 import com.zhenhui.demo.tracer.uic.api.domain.User;
 import com.zhenhui.demo.tracer.uic.api.service.PermissionService;
-import com.zhenhui.demo.tracer.uic.api.service.UserReadService;
+import com.zhenhui.demo.tracer.uic.api.service.UserQueryService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceSupport implements UserDetailsService {
 
     @Reference(version = "1.0.0")
-    private UserReadService userReadService;
+    private UserQueryService userQueryService;
 
     @Reference(version = "1.0.0")
     private PermissionService permissionService;
@@ -25,7 +25,7 @@ public class UserDetailsServiceSupport implements UserDetailsService {
     @Override
     public final UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            final User user = userReadService.queryByName(username);
+            final User user = userQueryService.queryByName(username);
             if (null == user) {
                 throw new UsernameNotFoundException(username);
             }
