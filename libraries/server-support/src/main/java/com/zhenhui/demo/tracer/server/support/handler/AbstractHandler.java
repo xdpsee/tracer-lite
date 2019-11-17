@@ -68,16 +68,19 @@ public abstract class AbstractHandler<T extends Message> extends SimpleChannelIn
 
         DeviceUtils.checkExpired(device);
 
-        final Connection connection = new ConnectionImpl(ctx.channel(), connector.protocol());
-        ChannelAttributes.setIfAbsent(ctx, ChannelAttributes.CONNECTION, connection);
+        Connection conn = (Connection) ChannelAttributes.get(ctx, ChannelAttributes.CONNECTION);
+        if (null == conn) {
+            conn = new ConnectionImpl(ctx.channel(), connector.protocol());
+        }
+        ChannelAttributes.setIfAbsent(ctx, ChannelAttributes.CONNECTION, conn);
         ChannelAttributes.setIfAbsent(ctx, ChannelAttributes.DEVICE_ID, device.getDeviceId());
 
-        Connection conn = ServerContext.connectionManager().getConnection(device.getDeviceId());
-        if (!connection.equals(conn)) {
-            ServerContext.connectionManager().registerConnection(connection);
+        final Connection connection = ServerContext.connectionManager().getConnection(msg.deviceId());
+        if (!conn.equals(connection)) {
+            ServerContext.connectionManager().registerConnection(conn);
         }
 
-        return connection;
+        return conn;
     }
 
     @Override
@@ -87,6 +90,7 @@ public abstract class AbstractHandler<T extends Message> extends SimpleChannelIn
         if (deviceId != null) {
             ServerContext.connectionManager().unregisterConnection(deviceId);
         }
+
     }
 
     @Override

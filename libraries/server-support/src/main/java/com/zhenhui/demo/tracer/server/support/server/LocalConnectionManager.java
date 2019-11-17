@@ -22,7 +22,7 @@ public class LocalConnectionManager implements ConnectionManager {
             .makeMap();
 
     public void registerConnection(Connection connection) {
-        connectionMap.putIfAbsent(connection.deviceId(), connection);
+        connectionMap.put(connection.deviceId(), connection);
         logger.info("[ConnectionManager] connection created: " + connection.deviceId().toString());
     }
 

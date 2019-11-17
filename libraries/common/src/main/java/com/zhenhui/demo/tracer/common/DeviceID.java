@@ -8,14 +8,17 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class DeviceID implements Serializable {
 
     private static final long serialVersionUID = -1991862317619422230L;
 
     @NonNull
+    @EqualsAndHashCode.Include
     private Type type;
 
     @NonNull
+    @EqualsAndHashCode.Include
     private String value;
 
     public static DeviceID fromString(String string) {

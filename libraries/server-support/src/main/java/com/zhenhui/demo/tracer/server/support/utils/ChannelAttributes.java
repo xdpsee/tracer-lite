@@ -45,8 +45,6 @@ public enum ChannelAttributes {
     public static Object get(ChannelHandlerContext ctx, ChannelAttributes attr) {
         return get(ctx.channel(), attr);
     }
-
-
 }
 
 
