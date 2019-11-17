@@ -15,9 +15,9 @@ import java.util.concurrent.TimeoutException;
 @Component
 public class CommandExecutor {
 
-    private static final String COMMAND_EXECUTE_REQUEST_DESTINATION = "topic.command.execute.request";
+    private static final String COMMAND_EXECUTE_REQUEST_DESTINATION = "pubsub.tracer.command.execute.request";
 
-    private static final String COMMAND_EXECUTE_RESPONSE_DESTINATION = "topic.command.execute.response";
+    private static final String COMMAND_EXECUTE_RESPONSE_DESTINATION = "pubsub.tracer.command.execute.response";
 
     @Autowired
     private MessageProducer messageProducer;
