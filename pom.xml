@@ -28,19 +28,19 @@
     <modules>
         <module>libraries/common</module>
         <module>libraries/uicc-api</module>
+        <module>libraries/udm-api</module>
         <module>libraries/control-api</module>
         <module>libraries/storage-api</module>
         <module>libraries/server-domain</module>
         <module>libraries/server-support</module>
         <module>libraries/tracer-security</module>
         <module>protocols/mobile-protocol</module>
-        <module>server-starter</module>
-        <module>storage-service</module>
+        <module>udm-service</module>
         <module>uicc-service</module>
+        <module>storage-service</module>
+        <module>server-starter</module>
         <module>tracer-webapi</module>
         <module>tracer-webapp</module>
-        <module>libraries/udm-api</module>
-        <module>udm-service</module>
     </modules>
 
     <repositories>
