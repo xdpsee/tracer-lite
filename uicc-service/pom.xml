@@ -90,6 +90,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <executable>true</executable>
+                    <fork>true</fork>
                 </configuration>
                 <executions>
                     <execution>
@@ -98,6 +99,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.12</version>
+                <configuration>
+                    <repository>tracer-lite/${project.artifactId}</repository>
+                </configuration>
             </plugin>
         </plugins>
     </build>

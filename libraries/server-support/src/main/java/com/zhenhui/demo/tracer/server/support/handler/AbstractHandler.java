@@ -71,9 +71,10 @@ public abstract class AbstractHandler<T extends Message> extends SimpleChannelIn
         Connection connection = (Connection) ChannelAttributes.get(ctx, ChannelAttributes.CONNECTION);
         if (null == connection) {
             connection = new ConnectionImpl(ctx.channel(), connector.protocol());
-            ServerContext.connectionManager().registerConnection(connection);
             ChannelAttributes.setIfAbsent(ctx, ChannelAttributes.CONNECTION, connection);
             ChannelAttributes.setIfAbsent(ctx, ChannelAttributes.DEVICE_ID, device.getDeviceId());
+
+            ServerContext.connectionManager().registerConnection(connection);
         }
 
         return connection;

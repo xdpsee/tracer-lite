@@ -16,8 +16,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <docker.image.prefix>tracer-lite</docker.image.prefix>
         <!-- Library-->
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
         <dubbo.version>2.7.3</dubbo.version>
         <dubbo.boot.version>2.7.3</dubbo.boot.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>

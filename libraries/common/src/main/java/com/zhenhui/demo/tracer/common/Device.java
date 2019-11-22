@@ -10,6 +10,8 @@ public class Device implements Serializable {
 
     private static final long serialVersionUID = 3725804156008769747L;
 
+    private Long id;
+
     private DeviceID deviceId;
 
     private String caption;
