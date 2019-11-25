@@ -3,4 +3,4 @@
 *.iml
 target
 *.log
-infra
+infra/data
