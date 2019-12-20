@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.server.support.utils;
 
 import com.zhenhui.demo.tracer.server.support.exception.DeviceException;
-import com.zhenhui.demo.tracer.common.Device;
+import com.zhenhui.demo.tracer.storage.api.domain.Device;
 
 public class DeviceUtils {
 

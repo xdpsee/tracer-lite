@@ -16,16 +16,13 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.common.DeviceID;
-import com.zhenhui.demo.tracer.domain.Event;
-import com.zhenhui.demo.tracer.domain.Location;
-import com.zhenhui.demo.tracer.domain.enums.EventType;
 import com.zhenhui.demo.tracer.domain.server.Configs;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.handler.AbstractEventHandler;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
 import com.zhenhui.demo.tracer.server.support.utils.DeviceUtils;
-import com.zhenhui.demo.tracer.common.Device;
+import com.zhenhui.demo.tracer.storage.api.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +37,11 @@ public class OverspeedEventHandler extends AbstractEventHandler {
     }
 
     @Override
-    protected List<Event> analyzeEvent(Location currPos) {
+    protected List<Event> analyzeEvent(DataMessage message) {
+        final Location currPos = message.getLocation();
         final List<Event> events = new ArrayList<>();
 
-        final DeviceID deviceId = currPos.deviceId();
+        final DeviceID deviceId = currPos.getDeviceId();
         final Device device = ServerContext.deviceService().queryDevice(deviceId);
 
         double speed = currPos.getSpeed();
@@ -60,8 +58,7 @@ public class OverspeedEventHandler extends AbstractEventHandler {
             if (lastPos == null
                     || (!lastPos.getId().equals(currPos.getId())
                     && speed > speedLimit
-                    && oldSpeed <= speedLimit)
-            ) {
+                    && oldSpeed <= speedLimit)) {
                 Event event = new Event(EventType.TYPE_DEVICE_OVERSPEED, currPos);
                 event.getAttributes().put(Event.Attributes.KEY_DOUBLE_SPEED, speed);
                 event.getAttributes().put(Device.Attributes.KEY_DOUBLE_SPEED_LIMIT, speedLimit);

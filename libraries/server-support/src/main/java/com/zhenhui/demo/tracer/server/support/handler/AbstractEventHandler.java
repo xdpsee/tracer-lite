@@ -1,10 +1,10 @@
 package com.zhenhui.demo.tracer.server.support.handler;
 
 
-import com.zhenhui.demo.tracer.domain.Event;
-import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
+import com.zhenhui.demo.tracer.storage.api.domain.Event;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -16,17 +16,17 @@ public abstract class AbstractEventHandler extends AbstractDataHandler {
     }
 
     @Override
-    protected final Location handleLocation(Location position) {
+    protected final DataMessage handleMessage(DataMessage message) {
 
-        List<Event> events = analyzeEvent(position);
+        List<Event> events = analyzeEvent(message);
         if (!CollectionUtils.isEmpty(events)) {
             ServerContext.eventService().saveEvents(events);
         }
 
-        return position;
+        return message;
     }
 
-    protected abstract List<Event> analyzeEvent(Location position);
+    protected abstract List<Event> analyzeEvent(DataMessage message);
 
 }
 

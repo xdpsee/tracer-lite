@@ -17,13 +17,14 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.common.DeviceID;
-import com.zhenhui.demo.tracer.domain.Event;
-import com.zhenhui.demo.tracer.domain.Location;
-import com.zhenhui.demo.tracer.domain.enums.EventType;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.handler.AbstractEventHandler;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
+import com.zhenhui.demo.tracer.storage.api.domain.DeviceID;
+import com.zhenhui.demo.tracer.storage.api.domain.Event;
+import com.zhenhui.demo.tracer.storage.api.domain.EventType;
+import com.zhenhui.demo.tracer.storage.api.domain.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +36,16 @@ public class IgnitionEventHandler extends AbstractEventHandler {
     }
 
     @Override
-    protected List<Event> analyzeEvent(Location currPos) {
+    protected List<Event> analyzeEvent(DataMessage message) {
 
+        final Location currPos = message.getLocation();
         final List<Event> events = new ArrayList<>();
 
-        final DeviceID deviceId = currPos.deviceId();
+        final DeviceID deviceId = currPos.getDeviceId();
         final Location lastPos = ServerContext.locationService().queryLastLocation(deviceId);
-        final Boolean ignition = currPos.getAttributes().getBoolean(Location.Attributes.KEY_IGNITION, false);
+        final boolean ignition = currPos.getAttributes().getBoolean(Location.Attributes.KEY_IGNITION, false);
 
-        if (lastPos != null && lastPos.getId().equals(currPos.getId()) && ignition != null) {
+        if (lastPos != null && lastPos.getId().equals(currPos.getId())) {
             boolean oldIgnition = lastPos.getAttributes().getBoolean(Location.Attributes.KEY_IGNITION, false);
             if (ignition && !oldIgnition) {
                 events.add(new Event(EventType.TYPE_IGNITION_ON, currPos));

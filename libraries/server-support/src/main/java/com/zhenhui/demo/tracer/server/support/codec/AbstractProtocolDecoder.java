@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.server.support.codec;
 
-import com.zhenhui.demo.tracer.domain.Location;
+import com.zhenhui.demo.tracer.storage.api.domain.Location;
 import com.zhenhui.demo.tracer.domain.server.Decoder;
 import com.zhenhui.demo.tracer.domain.Message;
 import io.netty.buffer.ByteBuf;

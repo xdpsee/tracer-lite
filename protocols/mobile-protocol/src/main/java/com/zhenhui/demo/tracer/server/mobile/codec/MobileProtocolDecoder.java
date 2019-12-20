@@ -1,11 +1,12 @@
 package com.zhenhui.demo.tracer.server.mobile.codec;
 
-import com.zhenhui.demo.tracer.common.DeviceID;
-import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.domain.Message;
 import com.zhenhui.demo.tracer.server.mobile.message.RegistryMessage;
 import com.zhenhui.demo.tracer.server.support.codec.AbstractProtocolDecoder;
 import com.zhenhui.demo.tracer.server.support.exception.MessageException;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
+import com.zhenhui.demo.tracer.storage.api.domain.DeviceID;
+import com.zhenhui.demo.tracer.storage.api.domain.Location;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.util.StringUtils;
 
@@ -29,7 +30,7 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Messa
             }
 
             if (message.startsWith("##2,")) {
-                return Collections.singletonList(decodeLocation(message));
+                return Collections.singletonList(decodeDataMessage(message));
             }
 
             return new ArrayList<>();
@@ -59,7 +60,7 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Messa
      * @param message frame message
      * @return Position
      */
-    private Location decodeLocation(String message) throws MessageException.DecodeFailure {
+    private DataMessage decodeDataMessage(String message) throws MessageException.DecodeFailure {
 
         Location location = new Location();
 
@@ -98,7 +99,7 @@ public class MobileProtocolDecoder extends AbstractProtocolDecoder<String, Messa
             }
         }
 
-        return location;
+        return new DataMessage(location);
     }
 }
 

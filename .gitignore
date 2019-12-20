@@ -3,4 +3,5 @@
 *.iml
 target
 *.log
-infra/data
+.vscode/*
+

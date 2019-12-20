@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>com.zhenhui.demo.tracer</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>common-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

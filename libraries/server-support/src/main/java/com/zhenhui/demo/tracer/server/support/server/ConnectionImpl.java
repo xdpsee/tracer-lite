@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.server.support.server;
 
 import com.zhenhui.demo.tracer.domain.Command;
-import com.zhenhui.demo.tracer.common.DeviceID;
+import com.zhenhui.demo.tracer.storage.api.domain.DeviceID;
 import com.zhenhui.demo.tracer.domain.server.Connection;
 import com.zhenhui.demo.tracer.domain.server.Protocol;
 import com.zhenhui.demo.tracer.server.support.utils.ChannelAttributes;

@@ -16,11 +16,12 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.domain.Event;
-import com.zhenhui.demo.tracer.domain.Location;
-import com.zhenhui.demo.tracer.domain.enums.EventType;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.handler.AbstractEventHandler;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
+import com.zhenhui.demo.tracer.storage.api.domain.Event;
+import com.zhenhui.demo.tracer.storage.api.domain.EventType;
+import com.zhenhui.demo.tracer.storage.api.domain.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,9 +34,11 @@ public class AlertEventHandler extends AbstractEventHandler {
     }
     
     @Override
-    protected List<Event> analyzeEvent(Location position) {
+    protected List<Event> analyzeEvent(DataMessage message) {
 
+        final Location position = message.getLocation();
         final List<Event> events = new ArrayList<>();
+
         String alarms = position.getAttributes().getString(Location.Attributes.KEY_ALARM);
         if (alarms != null) {
             String[] alerts = alarms.split(","); // 多值用逗号分隔

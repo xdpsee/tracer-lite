@@ -16,13 +16,14 @@
 package com.zhenhui.demo.tracer.server.support.handler.event;
 
 
-import com.zhenhui.demo.tracer.domain.Event;
-import com.zhenhui.demo.tracer.domain.Location;
-import com.zhenhui.demo.tracer.domain.enums.EventType;
 import com.zhenhui.demo.tracer.domain.server.Configs;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
 import com.zhenhui.demo.tracer.server.support.handler.AbstractEventHandler;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
+import com.zhenhui.demo.tracer.storage.api.domain.Event;
+import com.zhenhui.demo.tracer.storage.api.domain.EventType;
+import com.zhenhui.demo.tracer.storage.api.domain.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,9 @@ public class MotionEventHandler extends AbstractEventHandler {
     }
     
     @Override
-    protected List<Event> analyzeEvent(Location currPos) {
+    protected List<Event> analyzeEvent(DataMessage message) {
 
+        final Location currPos = message.getLocation();
         final List<Event> events = new ArrayList<>();
 
         double speed = currPos.getSpeed(), oldSpeed = 0;

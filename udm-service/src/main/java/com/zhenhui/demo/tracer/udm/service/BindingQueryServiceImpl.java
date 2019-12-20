@@ -1,6 +1,6 @@
 package com.zhenhui.demo.tracer.udm.service;
 
-import com.zhenhui.demo.tracer.common.Device;
+import com.zhenhui.demo.tracer.storage.api.domain.Device;
 import com.zhenhui.demo.tracer.storage.api.service.DeviceService;
 import com.zhenhui.demo.tracer.udm.api.service.BindingQueryService;
 import com.zhenhui.demo.tracer.udm.service.manager.BindingManager;

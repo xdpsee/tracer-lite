@@ -1,8 +1,8 @@
 package com.zhenhui.demo.tracer.server.support.handler;
 
 
-import com.zhenhui.demo.tracer.domain.Location;
 import com.zhenhui.demo.tracer.domain.server.ServerConnector;
+import com.zhenhui.demo.tracer.server.support.server.DataMessage;
 import com.zhenhui.demo.tracer.server.support.server.ServerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +16,11 @@ public class DefaultDataHandler extends AbstractDataHandler {
     }
 
     @Override
-    protected Location handleLocation(Location position) {
-        return ServerContext.locationService().saveLocation(position);
+    protected DataMessage handleMessage(DataMessage message) {
+
+        ServerContext.locationService().saveLocation(message.getLocation());
+
+        return message;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.zhenhui.demo.tracer.domain.server;
 
 
-import com.zhenhui.demo.tracer.common.utils.AttributesOp;
+import com.zhenhui.demo.tracer.storage.api.domain.AttributesOp;
 
 public class Configs extends AttributesOp {
 
